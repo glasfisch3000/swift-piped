@@ -1,6 +1,6 @@
 import Foundation
 
-struct Video: Codable {
+struct Video {
     var audioStreams: [AudioStream] // available audio streams
     var videoStreams: [VideoStream] // available video streams
     var subtitles: [SubtitleStream]
@@ -30,7 +30,7 @@ struct Video: Codable {
 }
 
 extension Video {
-    struct Relation: Codable {
+    struct Relation {
         var title: String
         var duration: Int
         var thumbnail: URL // the thumbnail data url
@@ -45,3 +45,11 @@ extension Video {
         var url: URL // the video link
     }
 }
+
+extension Video.Relation: Hashable { }
+extension Video.Relation: Codable { }
+extension Video.Relation: Sendable { }
+
+extension Video: Hashable { }
+extension Video: Codable { }
+extension Video: Sendable { }

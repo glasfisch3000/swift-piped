@@ -1,6 +1,6 @@
 import Foundation
 
-struct AudioStream: Codable {
+struct AudioStream {
     var bitrate: Int // bitrate in bytes
     var codec: String // audio codec
     var format: String // audio format
@@ -17,3 +17,7 @@ struct AudioStream: Codable {
     
     var videoOnly: Bool // whether the stream is video only
 }
+
+extension AudioStream: Hashable { }
+extension AudioStream: Codable { }
+extension AudioStream: Sendable { }
