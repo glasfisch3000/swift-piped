@@ -10,13 +10,14 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "swift-piped",
-            targets: ["swift-piped"]
+            name: "Piped",
+            targets: ["Piped"]
         ),
     ],
     targets: [
         .target(
-            name: "swift-piped"
+            name: "Piped",
+            path: "Sources/swift-piped"
         ),
     ]
 )
