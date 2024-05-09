@@ -53,3 +53,29 @@ extension Video.Relation: Sendable { }
 extension Video: Hashable { }
 extension Video: Codable { }
 extension Video: Sendable { }
+
+extension PipedAPI {
+    enum FetchError: Error {
+        case urlBuildingFailed
+        case invalidResponse
+        case statusCode(Int)
+    }
+    
+    func fetchVideo(id: String) async throws -> Video? {
+        guard let url = URL(string: "https://pipedapi.\(self.domain)/streams/\(id)") else { throw FetchError.urlBuildingFailed }
+        
+        let request = URLRequest(url: url)
+        let session = URLSession(configuration: .default)
+        
+        let (data, response) = try await session.data(for: request)
+        
+        switch (response as? HTTPURLResponse)?.statusCode {
+        case nil: throw FetchError.invalidResponse
+        case 200: break
+        case 404: return nil
+        case .some(let value): throw FetchError.statusCode(value)
+        }
+        
+        return try JSONDecoder().decode(Video.self, from: data)
+    }
+}
