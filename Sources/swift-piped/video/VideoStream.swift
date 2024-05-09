@@ -1,25 +1,25 @@
 import Foundation
 
-struct VideoStream {
-    var bitrate: Int // bitrate in bytes
-    var codec: String // video codec
-    var format: String // video format
-    var quality: String // audio quality
+public struct VideoStream {
+    public var bitrate: Int // bitrate in bytes
+    public var codec: String // video codec
+    public var format: String // video format
+    public var quality: String // audio quality
     
-    var fps: Int // frames per second
-    var width: Int // video width
-    var height: Int // video height
+    public var fps: Int // frames per second
+    public var width: Int // video width
+    public var height: Int // video height
     
     // for creating dash streams
-    var indexEnd: Int
-    var indexStart: Int
-    var initStart: Int
-    var initEnd: Int
+    public var indexEnd: Int
+    public var indexStart: Int
+    public var initStart: Int
+    public var initEnd: Int
     
-    var mimeType: String
-    var url: URL // stream data url
+    public var mimeType: String
+    public var url: URL // stream data url
     
-    var videoOnly: Bool // whether the stream is video only
+    public var videoOnly: Bool // whether the stream is video only
 }
 
 extension VideoStream: Hashable { }

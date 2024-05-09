@@ -1,21 +1,21 @@
 import Foundation
 
-struct AudioStream {
-    var bitrate: Int // bitrate in bytes
-    var codec: String // audio codec
-    var format: String // audio format
-    var quality: String // audio quality
+public struct AudioStream {
+    public var bitrate: Int // bitrate in bytes
+    public var codec: String // audio codec
+    public var format: String // audio format
+    public var quality: String // audio quality
     
     // for creating dash streams
-    var indexEnd: Int
-    var indexStart: Int
-    var initStart: Int
-    var initEnd: Int
+    public var indexEnd: Int
+    public var indexStart: Int
+    public var initStart: Int
+    public var initEnd: Int
     
-    var mimeType: String
-    var url: URL // stream data url
+    public var mimeType: String
+    public var url: URL // stream data url
     
-    var videoOnly: Bool // whether the stream is video only
+    public var videoOnly: Bool // whether the stream is video only
 }
 
 extension AudioStream: Hashable { }

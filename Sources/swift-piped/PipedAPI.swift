@@ -1,8 +1,8 @@
 import Foundation
 
-struct PipedAPI {
-    var domain: String
-    var port: UInt16
+public struct PipedAPI {
+    public var domain: String
+    public var port: UInt16
 }
 
 extension PipedAPI: Hashable { }
