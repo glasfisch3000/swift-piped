@@ -7,6 +7,7 @@ public struct TrendingItem {
     public var views: Int
     
     public var uploadedDate: Date
+    public var uploader: String
     public var uploaderUrl: URL
     public var uploaderAvatar: URL
     public var uploaderVerified: Bool
