@@ -20,3 +20,25 @@ extension PipedAPI {
         return try JSONDecoder().decode(TrendingPage.self, from: data)
     }
 }
+
+#if canImport(SwiftUI)
+import APIInterface
+
+public struct TrendingPageFetchable: Fetchable {
+    var api: PipedAPI
+    
+    init(api: PipedAPI) {
+        self.api = api
+    }
+    
+    public func fetch() async throws -> TrendingPage {
+        try await api.fetchTrendingPage()
+    }
+}
+
+extension PipedAPI {
+    public func trendingPage() -> TrendingPageFetchable {
+        .init(api: self)
+    }
+}
+#endif
