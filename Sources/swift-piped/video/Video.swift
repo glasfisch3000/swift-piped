@@ -78,10 +78,15 @@ extension PipedAPI {
 import APIInterface
 
 public struct VideoFetchable: Fetchable {
-    var api: PipedAPI
-    var videoID: String
+    public var api: PipedAPI
+    public var videoID: String
     
-    var url: URL? {
+    public init(api: PipedAPI, videoID: String) {
+        self.api = api
+        self.videoID = videoID
+    }
+    
+    public var url: URL? {
         URL(string: "https://pipedapi.\(api.domain):\(api.port)/streams/\(videoID)")
     }
     
