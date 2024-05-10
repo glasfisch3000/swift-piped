@@ -11,7 +11,7 @@ public struct Video {
     public var duration: Int
     public var thumbnailUrl: URL // the thumbnail data url
     
-    public var uploadDate: Date
+    public var uploadDate: String
     public var uploader: String // the channel name
     public var uploaderUrl: URL // the channel url
     public var uploaderVerified: Bool // whether the channel is verified
@@ -37,7 +37,7 @@ extension Video {
         
         public var views: Int
         
-        public var uploadDate: Date
+        public var uploadDate: String
         public var uploaderAvatar: URL // the channel picture url
         public var uploaderUrl: URL // the channel url
         public var uploaderVerified: Bool // whether the channel is verified
