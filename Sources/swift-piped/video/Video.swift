@@ -56,7 +56,7 @@ extension Video: Sendable { }
 
 extension PipedAPI {
     public func fetchVideo(id: String) async throws -> Video? {
-        guard let url = URL(string: "https://pipedapi.\(self.domain)/streams/\(id)") else { throw FetchError.urlBuildingFailed }
+        guard let url = URL(string: "https://pipedapi.\(self.domain):\(self.port)/streams/\(id)") else { throw FetchError.urlBuildingFailed }
         
         let request = URLRequest(url: url)
         let session = URLSession(configuration: .default)
@@ -82,7 +82,7 @@ extension PipedAPI {
         var videoID: String
         
         var url: URL? {
-            URL(string: "https://pipedapi.\(api.domain)/streams/\(videoID)")
+            URL(string: "https://pipedapi.\(api.domain):\(api.port)/streams/\(videoID)")
         }
         
         public func fetch() async throws -> Video? {
