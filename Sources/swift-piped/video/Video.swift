@@ -55,12 +55,6 @@ extension Video: Codable { }
 extension Video: Sendable { }
 
 extension PipedAPI {
-    public enum FetchError: Error {
-        case urlBuildingFailed
-        case invalidResponse
-        case statusCode(Int)
-    }
-    
     public func fetchVideo(id: String) async throws -> Video? {
         guard let url = URL(string: "https://pipedapi.\(self.domain)/streams/\(id)") else { throw FetchError.urlBuildingFailed }
         
