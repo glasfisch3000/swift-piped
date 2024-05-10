@@ -73,3 +73,25 @@ extension PipedAPI {
         return try JSONDecoder().decode(Video.self, from: data)
     }
 }
+
+#if canImport(SwiftUI)
+import APIInterface
+extension PipedAPI {
+    public struct VideoFetchable: Fetchable {
+        var api: PipedAPI
+        var videoID: String
+        
+        var url: URL? {
+            URL(string: "https://pipedapi.\(api.domain)/streams/\(videoID)")
+        }
+        
+        public func fetch() async throws -> Video? {
+            try await api.fetchVideo(id: videoID)
+        }
+    }
+    
+    public func video(id: String) -> VideoFetchable {
+        .init(api: self, videoID: id)
+    }
+}
+#endif

@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "swiftui-api-interface",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/glasfisch3000/swiftui-api-interface.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "472a6ae2cc3189a6b1da3ca759d6e134fa2eeb42"
+      }
+    }
+  ],
+  "version" : 2
+}

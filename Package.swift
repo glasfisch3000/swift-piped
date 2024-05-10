@@ -14,9 +14,15 @@ let package = Package(
             targets: ["Piped"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/glasfisch3000/swiftui-api-interface.git", branch: "main")
+    ],
     targets: [
         .target(
             name: "Piped",
+            dependencies: [
+                .product(name: "APIInterface", package: "swiftui-api-interface")
+            ],
             path: "Sources/swift-piped"
         ),
     ]
