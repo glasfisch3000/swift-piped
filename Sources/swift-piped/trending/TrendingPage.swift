@@ -4,7 +4,7 @@ public typealias TrendingPage = [TrendingItem]
 
 extension PipedAPI {
     public func fetchTrendingPage(region: String) async throws -> TrendingPage {
-        guard let url = URL(string: "https://pipedapi.\(self.domain):\(self.port)/trending/\(region)") else { throw FetchError.urlBuildingFailed }
+        guard let url = URL(string: "https://pipedapi.\(self.domain):\(self.port)/trending?region=\(region)") else { throw FetchError.urlBuildingFailed }
         
         let request = URLRequest(url: url)
         let session = URLSession(configuration: .default)
