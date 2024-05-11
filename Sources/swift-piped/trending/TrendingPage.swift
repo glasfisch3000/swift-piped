@@ -3,7 +3,7 @@ import Foundation
 public typealias TrendingPage = [TrendingItem]
 
 extension PipedAPI {
-    public func fetchTrendingPage(region: String) async throws -> TrendingPage {
+    public func fetchTrendingPage(region: String, parameters: RequestParameters) async throws -> TrendingPage {
         guard let url = URL(string: "https://pipedapi.\(self.domain):\(self.port)/trending?region=\(region)") else { throw FetchError.urlBuildingFailed }
         
         let request = URLRequest(url: url)
@@ -24,7 +24,7 @@ extension PipedAPI {
 #if canImport(SwiftUI)
 import APIInterface
 
-public struct TrendingPageFetchable: Fetchable {
+public struct TrendingPageFetchable: PipedFetchable {
     public var api: PipedAPI
     public var region: String
     
@@ -33,8 +33,8 @@ public struct TrendingPageFetchable: Fetchable {
         self.region = region
     }
     
-    public func fetch() async throws -> TrendingPage {
-        try await api.fetchTrendingPage(region: region)
+    public func fetch(parameters: PipedAPI.RequestParameters) async throws -> TrendingPage {
+        try await api.fetchTrendingPage(region: region, parameters: parameters)
     }
 }
 

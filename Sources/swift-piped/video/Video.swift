@@ -55,7 +55,7 @@ extension Video: Codable { }
 extension Video: Sendable { }
 
 extension PipedAPI {
-    public func fetchVideo(id: String) async throws -> Video? {
+    public func fetchVideo(id: String, parameters: RequestParameters) async throws -> Video? {
         guard let url = URL(string: "https://pipedapi.\(self.domain):\(self.port)/streams/\(id)") else { throw FetchError.urlBuildingFailed }
         
         let request = URLRequest(url: url)
@@ -77,7 +77,7 @@ extension PipedAPI {
 #if canImport(SwiftUI)
 import APIInterface
 
-public struct VideoFetchable: Fetchable {
+public struct VideoFetchable: PipedFetchable {
     public var api: PipedAPI
     public var videoID: String
     
@@ -90,8 +90,8 @@ public struct VideoFetchable: Fetchable {
         URL(string: "https://pipedapi.\(api.domain):\(api.port)/streams/\(videoID)")
     }
     
-    public func fetch() async throws -> Video? {
-        try await api.fetchVideo(id: videoID)
+    public func fetch(parameters: PipedAPI.RequestParameters) async throws -> Video? {
+        try await api.fetchVideo(id: videoID, parameters: parameters)
     }
 }
 
