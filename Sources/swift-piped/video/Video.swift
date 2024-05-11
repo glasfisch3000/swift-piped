@@ -54,26 +54,6 @@ extension Video: Hashable { }
 extension Video: Codable { }
 extension Video: Sendable { }
 
-extension PipedAPI {
-    public func fetchVideo(id: String, parameters: RequestParameters) async throws -> Video? {
-        guard let url = URL(string: "https://pipedapi.\(self.domain):\(self.port)/streams/\(id)") else { throw FetchError.urlBuildingFailed }
-        
-        let request = URLRequest.pipedAPIDefault(url, with: parameters)
-        let session = URLSession.pipedAPIDefault(with: parameters)
-        
-        let (data, response) = try await session.data(for: request)
-        
-        switch (response as? HTTPURLResponse)?.statusCode {
-        case nil: throw FetchError.invalidResponse
-        case 200: break
-        case 404: return nil
-        case .some(let value): throw FetchError.statusCode(value)
-        }
-        
-        return try JSONDecoder().decode(Video.self, from: data)
-    }
-}
-
 public struct VideoFetchable: PipedFetchable {
     public var api: PipedAPI
     public var videoID: String
@@ -87,8 +67,22 @@ public struct VideoFetchable: PipedFetchable {
         URL(string: "https://pipedapi.\(api.domain):\(api.port)/streams/\(videoID)")
     }
     
-    public func fetch(parameters: PipedAPI.RequestParameters) async throws -> Video? {
-        try await api.fetchVideo(id: videoID, parameters: parameters)
+    public func fetch(with parameters: PipedAPI.RequestParameters) async throws -> Video? {
+        guard let url = URL(string: "https://pipedapi.\(api.domain):\(api.port)/streams/\(self.videoID)") else { throw PipedAPI.FetchError.urlBuildingFailed }
+        
+        let request = URLRequest.pipedAPIDefault(url, with: parameters)
+        let session = URLSession.pipedAPIDefault(with: parameters)
+        
+        let (data, response) = try await session.data(for: request)
+        
+        switch (response as? HTTPURLResponse)?.statusCode {
+        case nil: throw PipedAPI.FetchError.invalidResponse
+        case 200: break
+        case 404: return nil
+        case .some(let value): throw PipedAPI.FetchError.statusCode(value)
+        }
+        
+        return try JSONDecoder().decode(Video.self, from: data)
     }
 }
 

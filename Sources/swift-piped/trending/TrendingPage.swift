@@ -11,7 +11,7 @@ public struct TrendingPageFetchable: PipedFetchable {
         self.region = region
     }
     
-    public func fetch(parameters: PipedAPI.RequestParameters) async throws -> TrendingPage {
+    public func fetch(with parameters: PipedAPI.RequestParameters) async throws -> TrendingPage {
         guard let url = URL(string: "https://pipedapi.\(api.domain):\(api.port)/trending?region=\(self.region)") else { throw PipedAPI.FetchError.urlBuildingFailed }
         
         let request = URLRequest.pipedAPIDefault(url, with: parameters)
