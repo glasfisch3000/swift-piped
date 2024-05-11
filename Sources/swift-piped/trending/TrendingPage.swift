@@ -2,28 +2,6 @@ import Foundation
 
 public typealias TrendingPage = [TrendingItem]
 
-extension PipedAPI {
-    public func fetchTrendingPage(region: String, parameters: RequestParameters) async throws -> TrendingPage {
-        guard let url = URL(string: "https://pipedapi.\(self.domain):\(self.port)/trending?region=\(region)") else { throw FetchError.urlBuildingFailed }
-        
-        let request = URLRequest(url: url)
-        let session = URLSession(configuration: .default)
-        
-        let (data, response) = try await session.data(for: request)
-        
-        switch (response as? HTTPURLResponse)?.statusCode {
-        case nil: throw FetchError.invalidResponse
-        case 200: break
-        case .some(let value): throw FetchError.statusCode(value)
-        }
-        
-        return try JSONDecoder().decode(TrendingPage.self, from: data)
-    }
-}
-
-#if canImport(SwiftUI)
-import APIInterface
-
 public struct TrendingPageFetchable: PipedFetchable {
     public var api: PipedAPI
     public var region: String
@@ -34,7 +12,20 @@ public struct TrendingPageFetchable: PipedFetchable {
     }
     
     public func fetch(parameters: PipedAPI.RequestParameters) async throws -> TrendingPage {
-        try await api.fetchTrendingPage(region: region, parameters: parameters)
+        guard let url = URL(string: "https://pipedapi.\(api.domain):\(api.port)/trending?region=\(self.region)") else { throw PipedAPI.FetchError.urlBuildingFailed }
+        
+        let request = URLRequest.pipedAPIDefault(url, with: parameters)
+        let session = URLSession.pipedAPIDefault(with: parameters)
+        
+        let (data, response) = try await session.data(for: request)
+        
+        switch (response as? HTTPURLResponse)?.statusCode {
+        case nil: throw PipedAPI.FetchError.invalidResponse
+        case 200: break
+        case .some(let value): throw PipedAPI.FetchError.statusCode(value)
+        }
+        
+        return try JSONDecoder().decode(TrendingPage.self, from: data)
     }
 }
 
@@ -43,4 +34,3 @@ extension PipedAPI {
         .init(api: self, region: region)
     }
 }
-#endif

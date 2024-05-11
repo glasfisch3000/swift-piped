@@ -58,8 +58,8 @@ extension PipedAPI {
     public func fetchVideo(id: String, parameters: RequestParameters) async throws -> Video? {
         guard let url = URL(string: "https://pipedapi.\(self.domain):\(self.port)/streams/\(id)") else { throw FetchError.urlBuildingFailed }
         
-        let request = URLRequest(url: url)
-        let session = URLSession(configuration: .default)
+        let request = URLRequest.pipedAPIDefault(url, with: parameters)
+        let session = URLSession.pipedAPIDefault(with: parameters)
         
         let (data, response) = try await session.data(for: request)
         
@@ -73,9 +73,6 @@ extension PipedAPI {
         return try JSONDecoder().decode(Video.self, from: data)
     }
 }
-
-#if canImport(SwiftUI)
-import APIInterface
 
 public struct VideoFetchable: PipedFetchable {
     public var api: PipedAPI
@@ -100,4 +97,3 @@ extension PipedAPI {
         .init(api: self, videoID: id)
     }
 }
-#endif
