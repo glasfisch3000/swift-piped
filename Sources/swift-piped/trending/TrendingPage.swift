@@ -1,6 +1,6 @@
 import Foundation
 
-public typealias TrendingPage = [TrendingItem]
+public typealias TrendingPage = [(String, TrendingItem)]
 
 public struct TrendingPageFetchable: PipedFetchable {
     public var api: PipedAPI
@@ -25,7 +25,12 @@ public struct TrendingPageFetchable: PipedFetchable {
         case .some(let value): throw PipedAPI.FetchError.statusCode(value)
         }
         
-        return try JSONDecoder().decode(TrendingPage.self, from: data)
+        // decode items and map with video id
+        let items = try JSONDecoder().decode([TrendingItem].self, from: data)
+        return items.compactMap { item -> (String, TrendingItem)? in
+            guard let videoID = item.videoID else { return nil }
+            return (videoID, item)
+        }
     }
 }
 

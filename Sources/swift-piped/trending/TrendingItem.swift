@@ -23,3 +23,13 @@ public struct TrendingItem {
 extension TrendingItem: Hashable { }
 extension TrendingItem: Codable { }
 extension TrendingItem: Sendable { }
+
+extension TrendingItem {
+    var videoID: String? {
+        guard let match = self.url.absoluteString.wholeMatch(of: videoIDRegex) else { return nil }
+        guard let videoID = match["videoID"]?.substring else { return nil }
+        return String(videoID)
+    }
+}
+
+internal let videoIDRegex = try! Regex("(https?:\\/\\/[A-Za-z0-9-_.]+(:[0-9]+)?)?\\/watch\\?v=(?<videoID>[A-Za-z0-9-_]+)")

@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "swift-piped",
     platforms: [
-        .macOS("12")
+        .macOS("13")
     ],
     products: [
         .library(
