@@ -13,13 +13,3 @@ public struct PipedAPI {
 extension PipedAPI: Hashable { }
 extension PipedAPI: Codable { }
 extension PipedAPI: Sendable { }
-
-extension PipedAPI {
-    public enum FetchError: Error {
-        case urlBuildingFailed
-        case invalidResponse
-        case notFound
-        case invalidContent
-        case statusCode(Int)
-    }
-}

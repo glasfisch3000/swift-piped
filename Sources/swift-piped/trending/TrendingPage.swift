@@ -12,7 +12,7 @@ public struct TrendingPageFetchable: PipedFetchable {
     }
     
     public func fetch(with parameters: PipedAPI.RequestParameters) async throws -> TrendingPage {
-        guard let url = URL(string: "https://pipedapi.\(api.domain):\(api.port)/trending?region=\(self.region)") else { throw PipedAPI.FetchError.urlBuildingFailed }
+        guard let url = URL(string: "https://pipedapi.\(api.domain):\(api.port)/trending?region=\(self.region)") else { throw PipedFetchError.urlBuildingFailed }
         
         let request = URLRequest.pipedAPIDefault(url, with: parameters)
         let session = URLSession.pipedAPIDefault(with: parameters)
@@ -20,9 +20,9 @@ public struct TrendingPageFetchable: PipedFetchable {
         let (data, response) = try await session.data(for: request)
         
         switch (response as? HTTPURLResponse)?.statusCode {
-        case nil: throw PipedAPI.FetchError.invalidResponse
+        case nil: throw PipedFetchError.invalidResponse
         case 200: break
-        case .some(let value): throw PipedAPI.FetchError.statusCode(value)
+        case .some(let value): throw PipedFetchError.statusCode(value)
         }
         
         // decode items and map with video id
