@@ -13,7 +13,7 @@ extension Video {
         public var views: Int
         
         public var uploaded: Int
-        public var uploadDate: String
+        public var uploadedDate: String
         public var uploaderName: String
         public var uploaderAvatar: URL // the channel picture url
         public var uploaderUrl: URL // the channel url
