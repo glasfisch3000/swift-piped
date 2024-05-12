@@ -2,7 +2,7 @@ import Foundation
 
 extension Video {
     public struct Relation {
-        public var title: String
+        public var title: String?
         public var shortDescription: String?
         public var duration: Int
         public var thumbnail: URL // the thumbnail data url
