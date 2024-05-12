@@ -34,7 +34,7 @@ public struct Video {
     public var livestream: Bool // whether the video is a livestream
     public var hls: URL? // the hls manifest URL, to be used for livestreams
     
-    public var lbryId: String // the lbry id of the video, if available
+    public var lbryId: String? // the lbry id of the video, if available
     public var proxyUrl: URL // the proxy url to be used for rewrites
     
     public var dash: URL? // the dash manifest URL, to be used if not null (for OTF streams)
