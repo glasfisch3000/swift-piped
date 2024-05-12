@@ -4,7 +4,7 @@ public struct Video {
     public var audioStreams: [AudioStream] // available audio streams
     public var videoStreams: [VideoStream] // available video streams
     public var subtitles: [SubtitleStream]
-    public var relatedStreams: [Self.Relation] // related videos (suggestions)
+    public var relatedStreams: [RelatedItem] // related videos (suggestions)
     
     public var title: String
     public var description: String

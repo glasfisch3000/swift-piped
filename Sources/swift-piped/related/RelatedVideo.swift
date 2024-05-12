@@ -1,8 +1,8 @@
 import Foundation
 
-extension Video {
-    public struct Relation {
-        public var title: String?
+extension RelatedItem {
+    public struct Video {
+        public var title: String
         public var shortDescription: String?
         public var duration: Int
         public var thumbnail: URL // the thumbnail data url
@@ -13,7 +13,7 @@ extension Video {
         public var views: Int
         
         public var uploaded: Int
-        public var uploadedDate: String?
+        public var uploadedDate: String
         public var uploaderName: String
         public var uploaderAvatar: URL // the channel picture url
         public var uploaderUrl: URL // the channel url
@@ -23,6 +23,6 @@ extension Video {
     }
 }
 
-extension Video.Relation: Hashable { }
-extension Video.Relation: Codable { }
-extension Video.Relation: Sendable { }
+extension RelatedItem.Video: Hashable { }
+extension RelatedItem.Video: Codable { }
+extension RelatedItem.Video: Sendable { }
