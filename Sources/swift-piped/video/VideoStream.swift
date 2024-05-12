@@ -2,7 +2,7 @@ import Foundation
 
 public struct VideoStream {
     public var bitrate: Int // bitrate in bytes
-    public var codec: String // video codec
+    public var codec: String? // video codec
     public var format: String // video format
     public var quality: String // audio quality
     
