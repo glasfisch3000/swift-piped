@@ -11,7 +11,7 @@ extension RelatedItem {
         public var videos: Int
         
         public var uploaderName: String
-        public var uploaderUrl: URL // the channel url
+        public var uploaderUrl: URL? // the channel url
         public var uploaderVerified: Bool // whether the channel is verified
         
         public var url: URL // the playlist link
