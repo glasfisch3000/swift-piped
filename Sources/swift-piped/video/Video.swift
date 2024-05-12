@@ -57,7 +57,7 @@ public struct VideoFetchable: PipedFetchable {
         URL(string: "https://pipedapi.\(api.domain):\(api.port)/streams/\(videoID)")
     }
     
-    public func fetch(with parameters: PipedAPI.RequestParameters) async throws -> Video? {
+    public func fetch(with parameters: PipedAPI.RequestParameters) async throws -> Video {
         guard let url = URL(string: "https://pipedapi.\(api.domain):\(api.port)/streams/\(self.videoID)") else { throw PipedAPI.FetchError.urlBuildingFailed }
         
         let request = URLRequest.pipedAPIDefault(url, with: parameters)
@@ -68,7 +68,7 @@ public struct VideoFetchable: PipedFetchable {
         switch (response as? HTTPURLResponse)?.statusCode {
         case nil: throw PipedAPI.FetchError.invalidResponse
         case 200: break
-        case 404: return nil
+        case 404: throw PipedAPI.FetchError.notFound
         case .some(let value): throw PipedAPI.FetchError.statusCode(value)
         }
         
