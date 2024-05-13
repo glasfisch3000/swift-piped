@@ -24,7 +24,7 @@ public struct Video {
     
     public var previewFrames: [Self.PreviewFrame]
     
-    public var uploadDate: String
+    public var uploadDate: Date
     public var uploader: String // the channel name
     public var uploaderUrl: URL // the channel url
     public var uploaderAvatar: URL // the channel avatar

@@ -28,7 +28,9 @@ public struct VideoFetchable: PipedFetchable {
         case .some(let value): throw PipedFetchError.statusCode(value)
         }
         
-        return try JSONDecoder().decode(Video.self, from: data)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return try decoder.decode(Video.self, from: data)
     }
 }
 
