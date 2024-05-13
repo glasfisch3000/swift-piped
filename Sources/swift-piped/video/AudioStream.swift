@@ -4,7 +4,7 @@ public struct AudioStream {
     public var bitrate: Int // bitrate in bytes
     public var codec: String // audio codec
     public var format: String // audio format
-    public var quality: String // audio quality
+    public var quality: AudioQuality // audio quality
     
     public var itag: Int
     
