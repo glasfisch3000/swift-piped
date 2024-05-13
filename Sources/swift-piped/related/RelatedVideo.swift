@@ -13,7 +13,7 @@ extension RelatedItem {
         public var views: Int
         
         public var uploaded: Int
-        public var uploadedDate: String
+        public var uploadedDate: String?
         public var uploaderName: String
         public var uploaderAvatar: URL // the channel picture url
         public var uploaderUrl: URL // the channel url
@@ -26,3 +26,9 @@ extension RelatedItem {
 extension RelatedItem.Video: Hashable { }
 extension RelatedItem.Video: Codable { }
 extension RelatedItem.Video: Sendable { }
+
+extension RelatedItem.Video {
+    public var isLivestream: Bool {
+        self.duration == -1 // seems to be the only way to determine this
+    }
+}
