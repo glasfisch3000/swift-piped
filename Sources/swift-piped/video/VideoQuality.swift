@@ -58,4 +58,4 @@ extension VideoQuality: Codable {
     }
 }
 
-private let videoQualityPattern = try! Regex("(?<pixels>[0-9]+)p")
+private let videoQualityPattern = try! Regex("(?<pixels>[0-9]+)p(?<framerate>[0-9]+)?")
