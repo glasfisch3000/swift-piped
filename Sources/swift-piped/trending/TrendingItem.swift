@@ -11,7 +11,7 @@ public struct TrendingItem {
     public var isShort: Bool
     
     public var uploaded: Int
-    public var uploadedDate: String
+    public var uploadedDate: String?
     public var uploaderName: String
     public var uploaderUrl: URL
     public var uploaderAvatar: URL
@@ -24,6 +24,7 @@ extension TrendingItem: Hashable { }
 extension TrendingItem: Codable { }
 extension TrendingItem: Sendable { }
 
+internal let videoIDRegex = try! Regex("(https?:\\/\\/[A-Za-z0-9-_.]+(:[0-9]+)?)?\\/watch\\?v=(?<videoID>[A-Za-z0-9-_]+)")
 extension TrendingItem {
     var videoID: String? {
         guard let match = self.url.absoluteString.wholeMatch(of: videoIDRegex) else { return nil }
@@ -32,4 +33,8 @@ extension TrendingItem {
     }
 }
 
-internal let videoIDRegex = try! Regex("(https?:\\/\\/[A-Za-z0-9-_.]+(:[0-9]+)?)?\\/watch\\?v=(?<videoID>[A-Za-z0-9-_]+)")
+extension TrendingItem {
+    public var isLivestream: Bool {
+        self.duration == -1
+    }
+}
