@@ -2,7 +2,7 @@ import Foundation
 
 public struct TrendingItem {
     public var title: String
-    public var shortDescription: String
+    public var shortDescription: String?
     public var thumbnail: URL
     public var views: Int
     
