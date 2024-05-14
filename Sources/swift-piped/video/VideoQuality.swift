@@ -26,9 +26,9 @@ extension VideoQuality: CustomStringConvertible {
         } else if let pixelsSubstring = output["pixels"]?.substring {
             guard let pixels = Int(pixelsSubstring) else { throw ParsingError.invalidPixels }
             self = .pixels(pixels)
+        } else {
+            throw ParsingError.unrecognisedFormat
         }
-        
-        throw ParsingError.unrecognisedFormat
     }
     
     public var description: String {
