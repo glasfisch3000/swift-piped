@@ -1,32 +1,17 @@
-public struct VideoQuality {
-    public var pixels: Int
-    
-    @inlinable
-    public init(pixels: Int) {
-        self.pixels = pixels
-    }
-}
-
-extension VideoQuality: ExpressibleByIntegerLiteral {
-    public init(integerLiteral value: Int) {
-        self.pixels = value
-    }
+public enum VideoQuality {
+    case pixels(Int)
+    case lbry
+    case lbryHLS
 }
 
 extension VideoQuality: Hashable { }
 extension VideoQuality: Sendable { }
-
-extension VideoQuality: Comparable {
-    @inlinable
-    public static func < (lhs: VideoQuality, rhs: VideoQuality) -> Bool {
-        lhs.pixels < rhs.pixels
-    }
-}
+extension VideoQuality: Comparable { }
 
 extension VideoQuality: CustomStringConvertible {
     public enum ParsingError: Error {
         case noMatch
-        case pixelsNotFound
+        case unrecognisedFormat
         case invalidPixels
     }
     
@@ -34,15 +19,27 @@ extension VideoQuality: CustomStringConvertible {
         let match = try videoQualityPattern.wholeMatch(in: string)
         guard let output = match?.output else { throw ParsingError.noMatch }
         
-        guard let pixelsSubstring = output["pixels"]?.substring else { throw ParsingError.pixelsNotFound }
-        guard let pixels = Int(String(pixelsSubstring)) else { throw ParsingError.invalidPixels }
+        if output["lbry"] != nil {
+            self = .lbry
+        } else if output["lbry_hls"] != nil {
+            self = .lbryHLS
+        } else if let pixelsSubstring = output["pixels"]?.substring {
+            guard let pixels = Int(pixelsSubstring) else { throw ParsingError.invalidPixels }
+            self = .pixels(pixels)
+        }
         
-        self.pixels = pixels
+        throw ParsingError.unrecognisedFormat
     }
     
-    @inlinable
     public var description: String {
-        pixels.description + "p"
+        switch self {
+        case .pixels(let int):
+            int.description + "p"
+        case .lbry:
+            "LBRY"
+        case .lbryHLS:
+            "LBRY HLS"
+        }
     }
 }
 
@@ -58,4 +55,4 @@ extension VideoQuality: Codable {
     }
 }
 
-private let videoQualityPattern = try! Regex("(?<pixels>[0-9]+)p(?<framerate>[0-9]+)?")
+private let videoQualityPattern = try! Regex("(?<pixels>[0-9]+)p|(?<lbry>LBRY)|(?<lbry_hls>LBRY HLS)")
