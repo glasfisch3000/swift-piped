@@ -51,4 +51,4 @@ extension VideoCodec: Codable {
     }
 }
 
-private let videoCodecPattern = try! Regex("(?<av01>av01.(?<attr1>[0-9A-Za-z]+).(?<attr2>[0-9A-Za-z]+).(?<attr1>[0-9A-Za-z]+))|(?<vp9>vp9)")
+private let videoCodecPattern = try! Regex("(?<av01>av01.(?<attr1>[0-9A-Za-z]+).(?<attr2>[0-9A-Za-z]+).(?<attr3>[0-9A-Za-z]+))|(?<vp9>vp9)")
