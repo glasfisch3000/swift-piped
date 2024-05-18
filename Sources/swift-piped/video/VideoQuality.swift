@@ -19,9 +19,9 @@ extension VideoQuality: CustomStringConvertible {
         let match = try videoQualityPattern.wholeMatch(in: string)
         guard let output = match?.output else { throw ParsingError.noMatch }
         
-        if output["lbry"] != nil {
+        if output["lbry"]?.substring != nil {
             self = .lbry
-        } else if output["lbry_hls"] != nil {
+        } else if output["lbry_hls"]?.substring != nil {
             self = .lbryHLS
         } else if let pixelsSubstring = output["pixels"]?.substring {
             guard let pixels = Int(pixelsSubstring) else { throw ParsingError.invalidPixels }

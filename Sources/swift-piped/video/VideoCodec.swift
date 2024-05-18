@@ -24,7 +24,7 @@ extension VideoCodec: CustomStringConvertible {
         } else if let attr = match["avc1_attr"]?.substring {
             self = .avc1(String(attr))
             return
-        } else if match["vp9"] != nil {
+        } else if match["vp9"]?.substring != nil {
             self = .vp9
             return
         }
